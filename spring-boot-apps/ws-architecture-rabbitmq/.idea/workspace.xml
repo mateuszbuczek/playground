@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="9fb50ff2-d60d-494b-9b7a-4813f8ed03d7" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/account-ws/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/account-ws/.mvn/wrapper/MavenWrapperDownloader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/account-ws/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/account-ws/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/account-ws/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/account-ws/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/account-ws/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/account-ws/src/main/java/com/hateml/account/Application.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/account-ws/src/main/java/com/hateml/account/api/AccountController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/account-ws/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/account-ws/src/test/java/com/hateml/account/ApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/config-server/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/config-server/.mvn/wrapper/MavenWrapperDownloader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/config-server/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/config-server/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/config-server/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/config-server/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/config-server/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/config-server/src/main/java/com/hateml/configserver/Application.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/config-server/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/config-server/src/test/java/com/hateml/configserver/ConfigServerApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/eureka-discovery-service/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/eureka-discovery-service/.mvn/wrapper/MavenWrapperDownloader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/eureka-discovery-service/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/eureka-discovery-service/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/eureka-discovery-service/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/eureka-discovery-service/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/eureka-discovery-service/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/eureka-discovery-service/src/main/java/com/hateml/discoveryservice/Application.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/eureka-discovery-service/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/eureka-discovery-service/src/test/java/com/hateml/discoveryservice/ApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/gateway-ws/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/gateway-ws/.mvn/wrapper/MavenWrapperDownloader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/gateway-ws/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/gateway-ws/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/gateway-ws/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/gateway-ws/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/gateway-ws/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/gateway-ws/src/main/java/com/hateml/gateway/Application.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/gateway-ws/src/main/java/com/hateml/gateway/config/WebSecurityConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/gateway-ws/src/main/java/com/hateml/gateway/security/AuthorizationFilter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/gateway-ws/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/gateway-ws/src/main/resources/bootstrap.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/gateway-ws/src/test/java/com/hateml/gateway/ApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/users-microservice/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/users-microservice/.mvn/wrapper/MavenWrapperDownloader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/users-microservice/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/users-microservice/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/users-microservice/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/users-microservice/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/users-microservice/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/users-microservice/src/main/java/com/hateml/users/Application.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/users-microservice/src/main/java/com/hateml/users/api/GlobalControllerExceptionHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/users-microservice/src/main/java/com/hateml/users/api/UserController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/users-microservice/src/main/java/com/hateml/users/api/error/ErrorResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/users-microservice/src/main/java/com/hateml/users/api/security/AuthenticationFilter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/users-microservice/src/main/java/com/hateml/users/api/security/LoginDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/users-microservice/src/main/java/com/hateml/users/api/user/UserDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/users-microservice/src/main/java/com/hateml/users/api/user/UserDtoFactory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/users-microservice/src/main/java/com/hateml/users/boundary/Users.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/users-microservice/src/main/java/com/hateml/users/config/WebSecurityConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/users-microservice/src/main/java/com/hateml/users/domain/User.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/users-microservice/src/main/java/com/hateml/users/domain/UserRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/users-microservice/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/users-microservice/src/main/resources/bootstrap.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../arch-eureka/users-microservice/src/test/java/com/hateml/users/ApplicationTest.java" beforeDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="ProjectId" id="1RWLL5PZI7kSVjKpJjr42F3cbYX" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="9fb50ff2-d60d-494b-9b7a-4813f8ed03d7" name="Default Changelist" comment="" />
+      <created>1569777845767</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1569777845767</updated>
+      <workItem from="1569777847112" duration="1525000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

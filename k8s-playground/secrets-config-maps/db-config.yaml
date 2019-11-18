@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: global-database-config
+  namespace: default
+data:
+  DATABASE_URL: "https://dbserver.some.com:3306"
+  DATABASE_PASSWORD: "asdqweq"
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: global-database-config-2
+  namespace: default
+data:
+  database.properties: |
+    database.url = https://dbserver.some.com:3306
+    database.password = sasdqweq

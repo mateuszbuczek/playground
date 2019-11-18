@@ -1,0 +1,110 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: position-simulator
+  namespace: default
+
+spec:
+  selector:
+    matchLabels:
+      app: position-simulator
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: position-simulator
+    spec:
+      containers:
+        - name: position-simulator-container
+          image: richardchesterwood/k8s-fleetman-position-simulator:release2
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: production-microservice
+            - name: DATABASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: global-database-config
+                  key: database.url
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: position-tracker
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: position-tracker
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: position-tracker
+    spec:
+      containers:
+        - name: position-tracker-container
+          image: richardchesterwood/k8s-fleetman-position-tracker:release3
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: production-microservice
+          envFrom:
+            - configMapRef:
+                name: global-database-config
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-gateway
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: api-gateway
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: api-gateway
+    spec:
+      containers:
+        - name: api-gateway-container
+          image: richardchesterwood/k8s-fleetman-api-gateway:release2
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8080
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: production-microservice
+          volumeMount:
+            - name: database-config-volume
+              mountPath: /etc/any-dir/config
+            volumes:
+              - name: database-config-volume
+              configMap:
+                name: global-database-config-2
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: webapp
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: webapp
+    spec:
+      containers:
+        - name: webapp-container
+          image: richardchesterwood/k8s-fleetman-webapp-angular:release2
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: production-microservice

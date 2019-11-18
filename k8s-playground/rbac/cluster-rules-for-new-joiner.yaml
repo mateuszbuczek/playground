@@ -1,0 +1,24 @@
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: new-joiner
+rules:
+- apiGroups: ["", "apps"] # Core API (v1) and apps (apps/v1)
+  resources: ["*"] # pods, services. NOT deployments
+  verbs: ["get", "list", "watch"]
+
+---
+
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: put-specific-user-or-users-into-new-joiner-role
+subjects:
+  # List users (defined in linux) that are going into this role
+- kind: User
+  name: francis
+roleRef:
+  kind: ClusterRole
+  name: new-joiner
+  apiGroup: rbac.authorization.k8s.io/v1
+
