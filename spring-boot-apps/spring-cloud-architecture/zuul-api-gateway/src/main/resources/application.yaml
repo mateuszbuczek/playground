@@ -1,0 +1,23 @@
+server:
+  port: 8762
+spring:
+  application:
+    name: zuul-api-gateway
+
+eureka:
+  instance:
+#    use ip addresses instead of hostnames to communicate with ws
+    prefer-ip-address: true
+  client:
+    register-with-eureka: true
+#    fetch list of all available ws
+    fetch-registry: true
+    service-url:
+      defaultzone: http://localhost:8761/eureka
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
