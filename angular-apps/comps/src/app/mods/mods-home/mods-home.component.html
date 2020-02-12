@@ -1,0 +1,9 @@
+<app-divider>Modal Component</app-divider>
+<button (click)="onClick()">Show modal</button>
+<app-modal (close)="onClick()" *ngIf="modalOpen">
+  <div modalTitle>Modal Title</div>
+  <p>Some content for the modal should go right here</p>
+  <ng-container modalFooter>
+    <button class="ui button" (click)="onClick()">OK</button>
+  </ng-container>
+</app-modal>
