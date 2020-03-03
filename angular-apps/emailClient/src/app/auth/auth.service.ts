@@ -1,18 +1,48 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {tap} from 'rxjs/operators';
+
+interface SignupCredentials {
+  username: string;
+  password: string;
+  passwordConfirmation: string;
+}
+
+interface SignedInResponse {
+  authenticated: boolean;
+  username: string;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  private readonly rootUrl = 'https://api.angular-email.com';
+  isSignedIn$ = new BehaviorSubject(false);
 
   constructor(private http: HttpClient) {
   }
 
   usernameAvailable(username: string): Observable<any> {
-    return this.http.post<{ message: boolean }>('https://api.angular-email.com/auth/username', {
+    return this.http.post<{ message: boolean }>(`${this.rootUrl}/auth/username`, {
       username
     });
+  }
+
+  signup(credentials: SignupCredentials) {
+    return this.http.post<{username: string}>(`${this.rootUrl}/auth/signup`, credentials).pipe(
+      tap(() => {
+        this.isSignedIn$.next(true);
+      })
+    );
+  }
+
+  checkAuth() {
+    return this.http.get<SignedInResponse>(`${this.rootUrl}/auth/signedin`).pipe(
+      tap(({authenticated}) => {
+          this.isSignedIn$.next(authenticated);
+      })
+    );
   }
 }
