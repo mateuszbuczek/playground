@@ -15,15 +15,16 @@ import java.util.Map;
 @EnableOAuth2Sso
 public class Application {
 
-    public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
-    }
+  public static void main(String[] args) {
+    SpringApplication.run(Application.class, args);
+  }
 
-    @GetMapping("/api")
-    public String get(Principal principal) {
-        Map<String, Object> details = (Map<String, Object>)
-                ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
-        String username = (String) details.get("name");
-        return "ACCESSED - " + username;
-    }
+  @GetMapping("/api")
+  public String get(Principal principal) {
+    Map<String, Object> details =
+        (Map<String, Object>)
+            ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
+    String username = (String) details.get("name");
+    return "ACCESSED - " + username;
+  }
 }
