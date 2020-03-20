@@ -2,13 +2,9 @@ import {Injectable} from '@angular/core';
 import {Observable, Subject} from 'rxjs';
 import {scan} from 'rxjs/operators';
 
-enum CommandType {
-  error, success, clear
-}
-
 export interface Command {
   id: number;
-  type: CommandType;
+  type: 'error' | 'success' | 'clear';
   text?: string;
 }
 
@@ -23,7 +19,7 @@ export class NotificationsService {
     this.messagesInput = new Subject<Command>();
     this.messagesOutput = this.messagesInput.pipe(
       scan((acc: Command[], value: Command) => {
-        if (value.type === CommandType.clear) {
+        if (value.type === 'clear') {
           return acc.filter(message => message.id !== value.id);
         } else {
           return [...acc, value];
@@ -33,25 +29,37 @@ export class NotificationsService {
   }
 
   addSuccess(message: string) {
+    const id = this.randomId();
+
     this.messagesInput.next({
-      id: this.randomId(),
+      id,
       text: message,
-      type: CommandType.success
+      type: 'success'
     });
+
+    setTimeout(() => {
+      this.clearMessage(id);
+    }, 4000);
   }
 
   addError(message: string) {
+    const id = this.randomId();
+
     this.messagesInput.next({
-      id: this.randomId(),
+      id,
       text: message,
-      type: CommandType.error
+      type: 'error'
     });
+
+    setTimeout(() => {
+      this.clearMessage(id);
+    }, 4000);
   }
 
   clearMessage(id: number) {
     this.messagesInput.next({
-      id: this.randomId(),
-      type: CommandType.clear
+      id,
+      type: 'clear'
     });
   }
 
