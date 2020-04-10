@@ -5,6 +5,7 @@ import org.apache.spark.api.java.JavaSparkContext;
 import scala.Tuple2;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Main {
 
@@ -16,20 +17,20 @@ public class Main {
         SparkConf conf = new SparkConf().setAppName("startingSpark").setMaster("local[*]").set("spark.driver.host", "127.0.0.1");
         JavaSparkContext sparkContext = new JavaSparkContext(conf);
 
-        reduceByKeyExample(sparkContext);
+        flatMapExample(sparkContext);
 
         sparkContext.close();
     }
 
-    private static void reduceByKeyExample(JavaSparkContext sparkContext) {
+    private static void flatMapExample(JavaSparkContext sparkContext) {
         ArrayList<String> data = new ArrayList<>();
         data.add("WARN: 4 September 0405");
         data.add("ERROR: 2 March 2021");
         data.add("WARN: 4 March 2021");
 
         sparkContext.parallelize(data)
-                .mapToPair(value -> new Tuple2<>(value.split(":")[0], 1L))
-                .reduceByKey(Long::sum)
-                .foreach(tuple -> System.out.println(tuple._1 + " has " + tuple._2));
+                .flatMap(value -> Arrays.asList(value.split(" ")).iterator())
+                .filter(word -> word.contains("0"))
+                .foreach(value -> System.out.println(value));
     }
 }
