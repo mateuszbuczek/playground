@@ -1,10 +1,10 @@
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.spark.SparkConf;
+import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import scala.Tuple2;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Main {
@@ -23,14 +23,19 @@ public class Main {
     }
 
     private static void flatMapExample(JavaSparkContext sparkContext) {
-        ArrayList<String> data = new ArrayList<>();
-        data.add("WARN: 4 September 0405");
-        data.add("ERROR: 2 March 2021");
-        data.add("WARN: 4 March 2021");
 
-        sparkContext.parallelize(data)
+        JavaRDD<String> rdd = sparkContext.textFile("src/main/resources/input-spring.txt");
+
+        rdd
+                .map(text -> text.replaceAll("[^a-zA-Z\\s]", "").toLowerCase())
                 .flatMap(value -> Arrays.asList(value.split(" ")).iterator())
-                .filter(word -> word.contains("0"))
-                .foreach(value -> System.out.println(value));
+                .filter(text -> text.trim().length() > 0)
+                .filter(Util::isNotBoring)
+                .mapToPair(word -> new Tuple2<>(word, 1L))
+                .reduceByKey(Long::sum)
+                .map(value -> new Tuple2<>(value._2, value._1))
+                .sortBy(value -> value._1, false, 1)
+                .take(10)
+                .forEach(System.out::println);
     }
 }

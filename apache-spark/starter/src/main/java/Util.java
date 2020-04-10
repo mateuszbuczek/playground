@@ -12,7 +12,7 @@ public class Util {
     private static Map<String, String> corrections = new HashMap<>();
 
     static {
-        InputStream is = Main.class.getResourceAsStream("/subtitles/boringwords.txt");
+        InputStream is = Main.class.getResourceAsStream("/boringwords.txt");
         BufferedReader br = new BufferedReader(new InputStreamReader(is));
         br.lines().forEach(it -> borings.add(it));
 
