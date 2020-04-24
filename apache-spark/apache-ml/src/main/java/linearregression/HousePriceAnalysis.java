@@ -2,9 +2,14 @@ package linearregression;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+import org.apache.spark.ml.evaluation.RegressionEvaluator;
 import org.apache.spark.ml.feature.VectorAssembler;
+import org.apache.spark.ml.param.ParamMap;
 import org.apache.spark.ml.regression.LinearRegression;
 import org.apache.spark.ml.regression.LinearRegressionModel;
+import org.apache.spark.ml.tuning.ParamGridBuilder;
+import org.apache.spark.ml.tuning.TrainValidationSplit;
+import org.apache.spark.ml.tuning.TrainValidationSplitModel;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
@@ -26,17 +31,31 @@ public class HousePriceAnalysis {
                 .select("price", "features")
                 .withColumnRenamed("price", "label");
 
-        Dataset<Row>[] trainingAndTestData = labelAndFeatures.randomSplit(new double[]{0.8, 0.2});
-        Dataset<Row> trainingData = trainingAndTestData[0];
-        Dataset<Row> testingData = trainingAndTestData[1];
+        Dataset<Row>[] dataSplits = labelAndFeatures.randomSplit(new double[]{0.8, 0.2});
+        Dataset<Row> trainingData = dataSplits[0];
+        Dataset<Row> holdoutData = dataSplits[1];
 
-        LinearRegressionModel model = new LinearRegression()
-                .fit(trainingData);
+        LinearRegression linearRegression = new LinearRegression();
 
-        model.transform(testingData).show();
+        ParamMap[] paramMaps = new ParamGridBuilder()
+                .addGrid(linearRegression.regParam(), new double[] {0.01, 0.1, 0.5})
+                .addGrid(linearRegression.elasticNetParam(), new double[] {0, 0.5, 1})
+                .build();
 
-        System.out.println("The training data r2 value is " + model.summary().r2() + " and the RMSE is " + model.summary().rootMeanSquaredError());
-        System.out.println("The testing data r2 value is " + model.evaluate(testingData).r2() + " and the RMSE is " + model.evaluate(testingData).rootMeanSquaredError());
+        TrainValidationSplit trainValidationSplit = new TrainValidationSplit()
+                .setEstimator(linearRegression)
+                .setEvaluator(new RegressionEvaluator().setMetricName("r2"))
+                .setEstimatorParamMaps(paramMaps)
+                .setTrainRatio(0.8);
+
+        TrainValidationSplitModel model = trainValidationSplit.fit(trainingData);
+        LinearRegressionModel lrModel = (LinearRegressionModel) model.bestModel();
+
+        lrModel.transform(holdoutData).show();
+
+        System.out.println("The training data r2 value is " + lrModel.summary().r2() + " and the RMSE is " + lrModel.summary().rootMeanSquaredError());
+        System.out.println("The testing data r2 value is " + lrModel.evaluate(holdoutData).r2() + " and the RMSE is " + lrModel.evaluate(holdoutData).rootMeanSquaredError());
+        System.out.println("best model regParam " + lrModel.getRegParam() + " elasticNetParam " + lrModel.getElasticNetParam());
     }
 
     private static SparkSession getSession() {
