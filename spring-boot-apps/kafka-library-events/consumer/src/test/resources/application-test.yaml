@@ -1,0 +1,10 @@
+spring:
+  kafka:
+    consumer:
+      bootstrap-servers: ${spring.embedded.kafka.brokers}
+    admin:
+      properties:
+        bootstrap:
+          servers: ${spring.embedded.kafka.brokers}
+    template:
+      default-topic: library-events
