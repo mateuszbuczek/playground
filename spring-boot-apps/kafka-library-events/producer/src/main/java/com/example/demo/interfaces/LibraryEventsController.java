@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,7 +22,18 @@ public class LibraryEventsController {
     @PostMapping("/events")
     public ResponseEntity<LibraryEvent> postLibraryEvent(@RequestBody @Valid LibraryEvent event) throws JsonProcessingException {
 
-        publisher.publish2(event);
+        publisher.publishCreate(event);
         return ResponseEntity.status(HttpStatus.CREATED).body(event);
+    }
+
+    @PutMapping("/events")
+    public ResponseEntity<?> puttLibraryEvent(@RequestBody @Valid LibraryEvent event) throws JsonProcessingException {
+
+        if (event.getId() == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("please pass id");
+        }
+
+        publisher.publishUpdate(event);
+        return ResponseEntity.status(HttpStatus.OK).body(event);
     }
 }

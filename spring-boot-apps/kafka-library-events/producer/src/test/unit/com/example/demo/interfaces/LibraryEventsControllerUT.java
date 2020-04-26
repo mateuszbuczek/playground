@@ -44,7 +44,7 @@ class LibraryEventsControllerUT {
 
         String value = objectMapper.writeValueAsString(event);
 
-        when(publisher.publish2(event)).thenReturn(null);
+        when(publisher.publishCreate(event)).thenReturn(null);
 
         // expect
         mockMvc.perform(
@@ -63,7 +63,7 @@ class LibraryEventsControllerUT {
 
         String value = objectMapper.writeValueAsString(event);
 
-        when(publisher.publish2(event)).thenReturn(null);
+        when(publisher.publishCreate(event)).thenReturn(null);
 
         // expect
         mockMvc.perform(

@@ -55,8 +55,8 @@ class LibraryEventSpecFT {
     }
 
     @Test
-    @Timeout(5)
-    void postLibraryEvent() {
+    @Timeout(10)
+    void postLibraryEvent() throws InterruptedException {
         // given
         Book book = Book.builder()
                 .id(123)
@@ -78,8 +78,38 @@ class LibraryEventSpecFT {
 
         // then
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
-
+        Thread.sleep(2000);
         ConsumerRecord<Integer, String> record = KafkaTestUtils.getSingleRecord(consumer, "library-events");
         assertEquals(record.value(), "{\"id\":null,\"type\":null,\"book\":{\"id\":123,\"name\":\"asd\",\"author\":\"tom\"}}");
+    }
+
+    @Test
+    @Timeout(10)
+    void putLibraryEvent() {
+        // given
+        Book book = Book.builder()
+                .id(123)
+                .author("tom")
+                .name("asd")
+                .build();
+
+        LibraryEvent event = LibraryEvent.builder()
+                .id(1)
+                .book(book)
+                .build();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("content-type", MediaType.APPLICATION_JSON.toString());
+
+        HttpEntity<LibraryEvent> request = new HttpEntity<>(event, headers);
+
+        // when
+        ResponseEntity<LibraryEvent> response = restTemplate.exchange("/events", HttpMethod.PUT, request, LibraryEvent.class);
+
+        // then
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+
+        ConsumerRecord<Integer, String> record = KafkaTestUtils. getSingleRecord(consumer, "library-events");
+        assertEquals(record.value(), "{\"id\":1,\"type\":null,\"book\":{\"id\":123,\"name\":\"asd\",\"author\":\"tom\"}}");
     }
 }

@@ -21,5 +21,9 @@ public class LibraryEvent {
 
     public void markAsNew() {
         this.type = LibraryEventType.NEW;
+
+    }
+    public void markAsUpdate() {
+        this.type = LibraryEventType.UPDATE;
     }
 }

@@ -36,7 +36,7 @@ public class LibraryEventPublisher {
         listenableFuture.addCallback(getCallback());
     }
 
-    public ListenableFuture<SendResult<Integer, String>> publish2(LibraryEvent event) throws JsonProcessingException {
+    public ListenableFuture<SendResult<Integer, String>> publishCreate(LibraryEvent event) throws JsonProcessingException {
         Integer id = event.getId();
         String payload = mapper.writeValueAsString(event);
         event.markAsNew();
@@ -45,6 +45,24 @@ public class LibraryEventPublisher {
         List<Header> headers = List.of(
                 new RecordHeader("event-source", "scanner".getBytes()),
                 new RecordHeader("event-type", LibraryEventType.NEW.toString().getBytes())
+        );
+        ProducerRecord<Integer, String> message = new ProducerRecord<>("library-events", null, id, payload, headers);
+
+        ListenableFuture<SendResult<Integer, String>> listenableFuture = template.send(message);
+        listenableFuture.addCallback(getCallback());
+
+        return listenableFuture;
+    }
+
+    public ListenableFuture<SendResult<Integer, String>> publishUpdate(LibraryEvent event) throws JsonProcessingException {
+        Integer id = event.getId();
+        String payload = mapper.writeValueAsString(event);
+        event.markAsUpdate();
+
+//        custom headers
+        List<Header> headers = List.of(
+                new RecordHeader("event-source", "scanner".getBytes()),
+                new RecordHeader("event-type", LibraryEventType.UPDATE.toString().getBytes())
         );
         ProducerRecord<Integer, String> message = new ProducerRecord<>("library-events", null, id, payload, headers);
 

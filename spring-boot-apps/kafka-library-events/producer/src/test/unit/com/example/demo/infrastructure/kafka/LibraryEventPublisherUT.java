@@ -56,7 +56,7 @@ class LibraryEventPublisherUT {
 
         when(template.send(isA(ProducerRecord.class))).thenReturn(future);
         // expect
-        assertThrows(Exception.class, () -> publisher.publish2(event).get());
+        assertThrows(Exception.class, () -> publisher.publishCreate(event).get());
     }
 
     @Test
@@ -84,6 +84,6 @@ class LibraryEventPublisherUT {
 
         when(template.send(isA(ProducerRecord.class))).thenReturn(future);
         // expect
-        assertDoesNotThrow( () -> publisher.publish2(event).get());
+        assertDoesNotThrow( () -> publisher.publishCreate(event).get());
     }
 }
