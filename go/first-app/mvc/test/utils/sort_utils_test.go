@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"github.com/mateuszbuczek/playground/go/first-app/mvc/utils"
 	"github.com/stretchr/testify/assert"
 	"sort"
 	"testing"
@@ -11,7 +12,7 @@ func TestBubbleSort(t *testing.T) {
 	elements := []int{9, 8, 7, 6}
 
 	// when
-	BubbleSort(elements)
+	utils.BubbleSort(elements)
 
 	// then
 	assert.NotNil(t, elements)
@@ -27,7 +28,7 @@ func TestBubbleSortAlreadySorted(t *testing.T) {
 	elements := []int{6, 7, 8, 9}
 
 	// when
-	BubbleSort(elements)
+	utils.BubbleSort(elements)
 
 	// then
 	assert.NotNil(t, elements)
@@ -39,7 +40,7 @@ func TestBubbleSortAlreadySorted(t *testing.T) {
 }
 
 func TestBubbleSortNilSlice(t *testing.T) {
-	BubbleSort(nil)
+	utils.BubbleSort(nil)
 }
 
 func getElements(n int) []int {
@@ -54,7 +55,7 @@ func BenchmarkBubbleSort1000(b *testing.B) {
 	elements := getElements(1000)
 
 	for i := 0; i < b.N; i++ {
-		BubbleSort(elements)
+		utils.BubbleSort(elements)
 	}
 }
 
@@ -62,7 +63,7 @@ func BenchmarkBubbleSort100000(b *testing.B) {
 	elements := getElements(100000)
 
 	for i := 0; i < b.N; i++ {
-		BubbleSort(elements)
+		utils.BubbleSort(elements)
 	}
 }
 

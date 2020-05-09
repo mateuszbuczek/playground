@@ -1,9 +1,12 @@
 package domain
 
-import "testing"
+import (
+	"github.com/mateuszbuczek/playground/go/first-app/mvc/domain"
+	"testing"
+)
 
 func TestGetUser(t *testing.T) {
-	user, applicationError := GetUser(0)
+	user, applicationError := domain.UsersService.GetUser(0)
 
 	if user != nil {
 		t.Error("we were not expecting a user with id 0")
