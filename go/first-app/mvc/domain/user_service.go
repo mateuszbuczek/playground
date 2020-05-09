@@ -16,7 +16,14 @@ var (
 	}
 )
 
-func GetUser(userId int64) (*User, *utils.ApplicationError) {
+type usersService struct {
+}
+
+var (
+	UsersService usersService
+)
+
+func (u *usersService) GetUser(userId int64) (*User, *utils.ApplicationError) {
 	if user := users[userId]; user != nil {
 		return user, nil
 	}
