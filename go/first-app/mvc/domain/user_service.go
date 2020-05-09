@@ -1,8 +1,8 @@
 package domain
 
 import (
-	"../utils"
 	"fmt"
+	"github.com/mateuszbuczek/playground/go/first-app/mvc/utils"
 )
 
 var (

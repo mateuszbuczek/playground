@@ -1,9 +1,9 @@
 package interfaces
 
 import (
-	"../domain"
-	"../utils"
 	"encoding/json"
+	"github.com/mateuszbuczek/playground/go/first-app/mvc/domain"
+	"github.com/mateuszbuczek/playground/go/first-app/mvc/utils"
 	"log"
 	"net/http"
 	"strconv"

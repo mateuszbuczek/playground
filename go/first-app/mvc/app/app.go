@@ -1,7 +1,7 @@
 package app
 
 import "net/http"
-import "../interfaces"
+import "github.com/mateuszbuczek/playground/go/first-app/mvc/interfaces"
 
 func StartApp() {
 	http.HandleFunc("/users", interfaces.GetUser)
