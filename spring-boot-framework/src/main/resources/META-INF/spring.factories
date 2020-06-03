@@ -1,0 +1,9 @@
+# other way to initialize listeners
+#org.springframework.context.ApplicationListener=\
+#com.example.demo.ApplicationEventsLogger
+
+org.springframework.boot.env.EnvironmentPostProcessor=\
+com.example.demo.CustomEnvironmentPostProcessor
+
+org.springframework.context.ApplicationContextInitializer=\
+com.example.demo.CustomApplicationContextInitializer
