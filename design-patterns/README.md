@@ -23,4 +23,4 @@
  - State. Allows an object to alter its behavior when its internal state changes.
  - Strategy. Allows one of a family of algorithms to be selected on-the-fly at run-time.
  - Template Method. Defines the skeleton of an algorithm as an abstract class, allowing its sub-classes to provide concrete behavior.
- - Visitor. Separates an algorithm from an object structure by moving the hierarchy of methods into one object.
+ - Visitor. Separates an algorithm from an object structure by moving the hierarchy of methods into one object .Double dispatch
