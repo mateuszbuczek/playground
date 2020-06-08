@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class LoggingAspect {
 
-    /* PointCut and Join Point*/
+    /* Advice and Join Point*/
     @Around("@annotation(Logged)")
     public Object logMethod(ProceedingJoinPoint joinPoint) throws Throwable {
         long start = System.currentTimeMillis();
