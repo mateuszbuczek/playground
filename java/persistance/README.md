@@ -13,3 +13,8 @@
 - parser - parse
 - optimizer - create or use cached execution plan
 - executor - execute
+
+### ACID
+- Atomicity - grouping all operations into one atomic (possible to rollback)
+- Consistency - all commited transactions leave the database in a proper state
+- Isolation
