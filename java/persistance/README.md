@@ -25,3 +25,16 @@
     - read skew - watching two tables, read first table, first and second tables changed , read second table
     - write skew
     - lost update - first transaction read, second update, first update
+
+### TRANSACTIONS PROPAGATION
+- Required - default propagation strategy, it only starts a transaction if there is none yet
+- Requires new - any current transaction context is suspended and replaced by a new transaction
+- Supports - if current thread runs inside transaction this method will use it, otherwise it executes outside of a transaction context
+- Not supported - any currently running transaction context is suspended and the current method runs outside of a transaction
+- Mandatory - current method runs only if the current method is already associated with a transaction context
+- Nested - current method is executed within a nested transaction if the current thread is already associated with a transaction. Otherwise a new transaction is started
+- Never - the current method must always run outside of a transaction context, otherwise exception
+
+### PESIMISTIC AND OPTIMISTIC LOCKING
+- Pessimistic locking - database lock - once lock acuiqred no other transaction can interfere - good if can be released timely fashioned - prevents non-repeatable-reads, lost updates
+- Optimistic locking - row version - read row version, during update use read version in where clause
