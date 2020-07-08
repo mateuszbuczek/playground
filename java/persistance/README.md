@@ -38,3 +38,16 @@
 ### PESIMISTIC AND OPTIMISTIC LOCKING
 - Pessimistic locking - database lock - once lock acuiqred no other transaction can interfere - good if can be released timely fashioned - prevents non-repeatable-reads, lost updates
 - Optimistic locking - row version - read row version, during update use read version in where clause
+
+### JPA ENTITY STATES
+- New (transient) - not mapped yet to database row
+- Managed (persistent - proxied by jpa, dirty checks
+- Detached - once current persistence context is close all previously managed entities become detached (not tracked) 
+- Removed - to be deleted during persistence context flush
+
+### HIBERNATE RELATIONSHIPS
+when using @ElementCollection prefer set over list - when removing in list hibernate needs to ensure it deletes proper element
+
+- OneToMany - prefer bidirectional with methods (atleast ensure child has proper parent id set)
+- OneToOne - prefer bidirectional, possibility of use @MapsId to share same key on both sides
+- ManyToMany - prefer sets, bidirectional
