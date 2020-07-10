@@ -51,3 +51,10 @@ when using @ElementCollection prefer set over list - when removing in list hiber
 - OneToMany - prefer bidirectional with methods (atleast ensure child has proper parent id set)
 - OneToOne - prefer bidirectional, possibility of use @MapsId to share same key on both sides
 - ManyToMany - prefer sets, bidirectional
+
+### HIBERNATE
+- explicit locks with version field
+- implicit with @OptimisticLocking set with where clause using read fields
+
+- pessimistic read lock - prevent any other transaction from acquiring exclusive lock
+- pessimistic write - prevent any other transaction from acquirin shared/exclusive lock
