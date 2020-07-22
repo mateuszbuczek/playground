@@ -1,0 +1,22 @@
+def queryDslSourceDirectory = 'build/generated/sources/annotationProcessor/java/main'
+
+querydsl {
+    jpa = true
+    querydslSourcesDir = queryDslSourceDirectory
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs += queryDslSourceDirectory
+        }
+    }
+}
+
+compileQuerydsl {
+    options.annotationProcessorPath = configurations.querydsl
+}
+
+configurations {
+    querydsl.extendsFrom compileClasspath
+}

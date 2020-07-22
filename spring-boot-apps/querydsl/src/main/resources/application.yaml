@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    username: user
+    password: password
+    url: jdbc:postgresql://localhost:5432/postgres
+  flyway:
+    enabled: false
+  jpa:
+    hibernate:
+      ddl-auto: create
+    open-in-view: false
+
+    show_sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        use_sql_comments: true
