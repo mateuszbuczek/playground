@@ -1,1 +1,1 @@
-go run golang/basics
+go run github.com/mateuszbuczek/playground/golang/basics
