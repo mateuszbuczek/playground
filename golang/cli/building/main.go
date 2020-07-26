@@ -4,7 +4,7 @@ import "fmt"
 import "C"
 
 func main() {
-
+	Hello()
 }
 
 func Hello() {
