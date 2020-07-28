@@ -1,6 +1,10 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"regexp"
+	"strings"
+)
 
 type messageType int
 
@@ -32,4 +36,29 @@ func showMessage(messageType messageType, message string) {
 		printMessage := fmt.Sprintf("\nError: \n%s\n", message)
 		fmt.Printf(ErrorColor, printMessage)
 	}
+}
+
+func CompareCaseIns(a, b string) bool {
+	if len(a) == len(b) {
+		if strings.ToLower(a) == strings.ToLower(b) {
+			return true
+		}
+	}
+
+	return false
+}
+
+func FindSubstring(search, string string) bool {
+	return strings.Contains(string, search)
+}
+
+func ReplaceAll(string, searchPhrase, replacePhrase string) string {
+	return strings.Replace(string, searchPhrase, replacePhrase, -1)
+}
+
+func find(string string) bool {
+	r, _ := regexp.Compile(`s(\w[a-z]+)g\b`)
+
+	r.FindAllStringSubmatch(string, -1)
+	return r.MatchString(string)
 }
