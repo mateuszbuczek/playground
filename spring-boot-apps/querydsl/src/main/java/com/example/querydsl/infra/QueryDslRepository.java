@@ -4,6 +4,7 @@ import com.example.querydsl.domain.QBlogPost;
 import com.example.querydsl.domain.QUser;
 import com.example.querydsl.domain.User;
 import com.querydsl.core.Tuple;
+import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.NumberPath;
 import com.querydsl.jpa.JPAExpressions;
@@ -28,6 +29,12 @@ public class QueryDslRepository {
     public QueryDslRepository(EntityManager entityManager) {
         this.entityManager = entityManager;
         this.query = new JPAQueryFactory(entityManager);
+    }
+
+    public List<User> findByPredicate(Predicate predicate) {
+        return query.selectFrom(user)
+                .where(predicate)
+                .fetch();
     }
 
     public Optional<User> findByLogin(String login) {
