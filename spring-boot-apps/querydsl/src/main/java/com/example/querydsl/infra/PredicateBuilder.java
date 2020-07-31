@@ -5,6 +5,8 @@ import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
 
+import java.util.function.Supplier;
+
 public class PredicateBuilder {
     private final BooleanBuilder booleanBuilder = new BooleanBuilder();
 
@@ -15,9 +17,9 @@ public class PredicateBuilder {
         return this;
     }
 
-    public PredicateBuilder andIf(BooleanExpression booleanExpression, boolean condition) {
-        if (booleanExpression != null && condition) {
-            booleanBuilder.and(booleanExpression);
+    public PredicateBuilder andIf(Supplier<BooleanExpression> supplier, boolean condition) {
+        if (condition && supplier != null && supplier.get() != null) {
+            booleanBuilder.and(supplier.get());
         }
         return this;
     }

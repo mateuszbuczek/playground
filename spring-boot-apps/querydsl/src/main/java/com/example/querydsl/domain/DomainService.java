@@ -28,7 +28,7 @@ public class DomainService {
 
         Predicate predicate = new PredicateBuilder()
                 .and(QUser.user.id.eq(1L))
-                .andIf(QUser.user.login.in(logins), CollectionUtils.isEmpty(logins))
+                .andIf(() -> QUser.user.login.in(logins), !CollectionUtils.isEmpty(logins))
                 .build();
 
         List<User> byPredicate = repository.findByPredicate(predicate);
