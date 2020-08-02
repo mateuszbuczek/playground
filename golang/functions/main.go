@@ -2,6 +2,7 @@ package main
 
 import (
 	"errors"
+	"fmt"
 	"github.com/mateuszbuczek/playground/golang/functions/sv"
 	"math"
 )
@@ -29,4 +30,14 @@ func sum(values ...float64) float64 {
 		total += value
 	}
 	return total
+}
+
+func anonymousFunctions() func(name string) string {
+	a := func(name string) string {
+		fmt.Println(name)
+		return name
+	}
+
+	a("asd")
+	return a
 }
