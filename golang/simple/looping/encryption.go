@@ -28,7 +28,7 @@ func main() {
 	}
 }
 
-func tower1(s chan string, t1 chan string, offset int32)  {
+func tower1(s chan string, t1 chan string, offset int32) {
 	is := bufio.NewReader(os.Stdin)
 	fmt.Println("Tower1: Enter your Message for Tower 2: ")
 	input, _ := is.ReadString('\n')
@@ -38,7 +38,7 @@ func tower1(s chan string, t1 chan string, offset int32)  {
 
 	var secretString string
 
-	for _,c := range input {
+	for _, c := range input {
 		secretString += string(c + offset)
 	}
 
@@ -49,10 +49,10 @@ func tower1(s chan string, t1 chan string, offset int32)  {
 }
 
 func tower2(s chan string, t2 chan string, offset int32) {
-	secretString := <- s
+	secretString := <-s
 	var orgString string
 
-	for _, c:= range secretString {
+	for _, c := range secretString {
 		orgString += string(c - offset)
 	}
 

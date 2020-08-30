@@ -5,7 +5,7 @@ import (
 	"database/sql"
 	"fmt"
 	_ "github.com/lib/pq"
-	"github.com/mateuszbuczek/playground/golang/sqlboiler-schemafirst-interactions/models"
+	"github.com/mateuszbuczek/playground/golang/sqlboiler-schemafirst/models"
 	"github.com/volatiletech/sqlboiler/v4/boil"
 	"github.com/volatiletech/sqlboiler/v4/queries/qm"
 )

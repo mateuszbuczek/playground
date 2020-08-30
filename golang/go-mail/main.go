@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/mateuszbuczek/playground/golang/mail-interactions/email"
+	"github.com/mateuszbuczek/playground/golang/go-mail/email"
 	"log"
 	"net/mail"
 	"net/smtp"
