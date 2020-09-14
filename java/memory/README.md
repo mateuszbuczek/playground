@@ -1,0 +1,18 @@
+#### 1. Just in time compilaton and the code cache
+    - Java compiles .java code to byte code .class which is then loaded into JVM
+    - JVM is interpreting byte code
+    - Just in time compilation - used to improve performance of running code. 
+    
+      Most often called part of code/methods can be compiled to native system code to speed up execution.
+      Then on JVM there will be part of byte code and part of native code, the latter will be executed faster.
+      That means code runs faster the longer it is left to run. 
+      Process of compiling byte code to native code runs on different thread.
+      JIT compiled native code can be put to jvm code cache to execute most often used code even faster.
+    - There are 2 JVM JIT compilers c1 (tier 1,2,3, fast compiling) and c2 (tier 4, slower, higher optimization). 
+      The process of deciding by what JIT compilator should the part of code be compiled is called profiling
+
+#### FLAGS
+    - debugging
+        - -XX:+PrintCompilation - prints to console jit code compilation stats ( after program exit 1)
+        - -XX:+UnlockDiagnosticVMOptions -XX:+LogCompilation - show jit code compilation stats at runtime (through log)
+        - -XX:+PrintCodeCache - get information about available/used jvm cache size
