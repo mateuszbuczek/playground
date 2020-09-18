@@ -17,6 +17,15 @@
     - every native pointer takes 4 bytes              | 8 bytes
     - client JIT compiler (small short running app)   | client & server JIT compilers (long running apps) 
 
+#### Java memory
+    - the stack
+        - every thread has its own stack
+        - stacks works as first in last out
+        - stack contains local variables(small data types)/object-references which are easy to pop off (clean)
+    - the heap
+        - is shared across all threads
+        - store objects (accessed through reference by stack)
+
 #### FLAGS
     - debugging
         - -XX:+PrintCompilation - prints to console jit code compilation stats ( after program exit 1)
