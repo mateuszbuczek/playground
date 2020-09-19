@@ -6,6 +6,7 @@ import (
 	"github.com/mateuszbuczek/playground/grpc/w-go/utils"
 	"github.com/stretchr/testify/require"
 	"google.golang.org/grpc"
+	"io"
 	"net"
 	"testing"
 )
@@ -13,7 +14,7 @@ import (
 func TestClientCreateLaptop(t *testing.T) {
 	t.Parallel()
 
-	laptopServer, serverAddress := startTestLaptopServer(t)
+	laptopServer, serverAddress := startTestLaptopServer(t, NewInMemoryLaptopStore())
 	client := newTestLaptopClient(t, serverAddress)
 
 	laptop := utils.NewLaptop()
@@ -33,8 +34,70 @@ func TestClientCreateLaptop(t *testing.T) {
 	require.NotNil(t, other)
 }
 
-func startTestLaptopServer(t *testing.T) (*LaptopServer, string) {
-	laptopServer := NewLaptopServer(NewInMemoryLaptopStore())
+func TestClientSearchLaptop(t *testing.T) {
+	t.Parallel()
+
+	filter := &pb.Filter{
+		MaxPriceUsd: 500,
+		MinCpuCores: 2,
+		MinCpuGhz:   3,
+		MinRam:      nil,
+	}
+
+	store := NewInMemoryLaptopStore()
+	expectedIds := make(map[string]bool)
+
+	for i := 0; i < 5; i++ {
+		laptop := utils.NewLaptop()
+
+		switch i {
+		case 0:
+			laptop.PriceUsd = 150
+		case 1:
+			laptop.Cpu.NumberCores = 1
+		case 2:
+			laptop.Cpu.MinGhz = 2
+		case 3:
+			laptop.PriceUsd = 120
+			laptop.Cpu.NumberCores = 5
+			laptop.Cpu.MinGhz = 4
+			expectedIds[laptop.Id] = true
+		case 4:
+			laptop.PriceUsd = 121
+			laptop.Cpu.NumberCores = 51
+			laptop.Cpu.MinGhz = 41
+			expectedIds[laptop.Id] = true
+		}
+
+		err := store.Save(laptop)
+		require.NoError(t, err)
+	}
+
+	_, serverAddress := startTestLaptopServer(t, store)
+	client := newTestLaptopClient(t, serverAddress)
+
+	request := &pb.SearchLaptopRequest{Filter: filter}
+	stream, err := client.SearchLaptop(context.Background(), request)
+	require.NoError(t, err)
+
+	found := 0
+	for {
+		res, err := stream.Recv()
+		if err == io.EOF {
+			break
+		}
+
+		require.NoError(t, err)
+		require.Contains(t, expectedIds, res.GetLaptop().GetId())
+
+		found += 1
+	}
+
+	require.Equal(t, len(expectedIds), found)
+}
+
+func startTestLaptopServer(t *testing.T, store LaptopStore) (*LaptopServer, string) {
+	laptopServer := NewLaptopServer(store)
 	grpcServer := grpc.NewServer()
 
 	pb.RegisterLaptopServiceServer(grpcServer, laptopServer)
