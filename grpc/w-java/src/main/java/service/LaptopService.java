@@ -6,6 +6,7 @@ import com.example.pb.Filter;
 import com.example.pb.Laptop;
 import com.example.pb.SearchLaptopRequest;
 import com.example.pb.SearchLaptopResponse;
+import io.grpc.Context;
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 
@@ -60,10 +61,10 @@ public class LaptopService extends com.example.pb.LaptopServiceGrpc.LaptopServic
     }
 
     @Override
-    public void searchLaptop(SearchLaptopRequest request, StreamObserver<SearchLaptopResponse> responseObserver) {
+    public void searchLaptop(SearchLaptopRequest request, StreamObserver<SearchLaptopResponse> responseObserver) throws InterruptedException {
         Filter filter = request.getFilter();
 
-        laptopStore.Search(filter, (laptop) -> {
+        laptopStore.Search(Context.current(), filter, (laptop) -> {
             logger.info("found laptop with ID: " + laptop.getId());
             SearchLaptopResponse response = SearchLaptopResponse.newBuilder().setLaptop(laptop).build();
             responseObserver.onNext(response);
