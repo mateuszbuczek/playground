@@ -1,9 +1,13 @@
 package service;
 
+import com.example.pb.Filter;
 import com.example.pb.Laptop;
+import io.grpc.Context;
 
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.TimeUnit;
 
 public class InMemoryLaptopStore implements LaptopStore {
     private ConcurrentMap<String, com.example.pb.Laptop> data = new ConcurrentHashMap<>();
@@ -25,5 +29,23 @@ public class InMemoryLaptopStore implements LaptopStore {
         }
 
         return data.get(id).toBuilder().build();
+    }
+
+    @Override
+    public void Search(Context ctx, Filter filter, LaptopStream stream) throws InterruptedException {
+        for (Map.Entry<String, Laptop> entry: data.entrySet()) {
+            if (ctx.isCancelled()) {
+                return;
+            }
+            TimeUnit.SECONDS.sleep(1);
+            Laptop value = entry.getValue();
+            if (isQualified(filter, value)) {
+                stream.Send(value);
+            }
+        }
+    }
+
+    private boolean isQualified(Filter filter, Laptop value) {
+        return true;
     }
 }

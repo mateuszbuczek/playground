@@ -2,7 +2,10 @@ package service;
 
 import com.example.pb.CreateLaptopRequest;
 import com.example.pb.CreateLaptopResponse;
+import com.example.pb.Filter;
 import com.example.pb.Laptop;
+import com.example.pb.SearchLaptopRequest;
+import com.example.pb.SearchLaptopResponse;
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 
@@ -54,5 +57,19 @@ public class LaptopService extends com.example.pb.LaptopServiceGrpc.LaptopServic
         responseObserver.onCompleted();
 
         logger.info("saved laptop with ID: " + other.getId());
+    }
+
+    @Override
+    public void searchLaptop(SearchLaptopRequest request, StreamObserver<SearchLaptopResponse> responseObserver) {
+        Filter filter = request.getFilter();
+
+        laptopStore.Search(filter, (laptop) -> {
+            logger.info("found laptop with ID: " + laptop.getId());
+            SearchLaptopResponse response = SearchLaptopResponse.newBuilder().setLaptop(laptop).build();
+            responseObserver.onNext(response);
+        });
+
+        responseObserver.onCompleted();
+        logger.info("searching laptop completed");
     }
 }
