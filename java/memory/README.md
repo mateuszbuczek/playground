@@ -26,6 +26,11 @@
         - is shared across all threads
         - store objects (accessed through reference by stack)
 
+#### escaping references
+    - immutable collection
+    - instead of creating new copy objects use interfaces with getters only
+    - java 9 modules ( do not import implementation, just interface)
+
 #### FLAGS
     - debugging
         - -XX:+PrintCompilation - prints to console jit code compilation stats ( after program exit 1)
