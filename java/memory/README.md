@@ -30,6 +30,7 @@
     - immutable collection
     - instead of creating new copy objects use interfaces with getters only
     - java 9 modules ( do not import implementation, just interface)
+    - primitive type wrappers are immutable (when other value assigned new object created)
 
 #### FLAGS
     - debugging
