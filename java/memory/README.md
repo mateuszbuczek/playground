@@ -25,7 +25,17 @@
     - the heap
         - is shared across all threads
         - store objects (accessed through reference by stack)
-
+        - contains string pool (container containing strings objects put by compiler, 
+          if string created by 'new' keyword it's not being put here (it may be using intern method on newly created string)))
+          strings in string pool can be garbage collected
+    - metaspace
+        - store general metadata ( for example which classes where compiled by JIT to native code ) 
+        - store information where static vars (objects) are stored (primitives are stored in metaspace itself) - static vars will never be garbage collected
+    
+    - exceptions:
+        - if object is used in small scope and will be not used later on (will be cleaned pretty soon)
+         modern JVM's for efficiency can create those objects on stack
+        
 #### escaping references
     - immutable collection
     - instead of creating new copy objects use interfaces with getters only
