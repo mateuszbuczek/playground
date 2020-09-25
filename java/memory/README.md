@@ -25,9 +25,11 @@
     - the heap
         - is shared across all threads
         - store objects (accessed through reference by stack)
-        - contains string pool (container containing strings objects put by compiler, 
-          if string created by 'new' keyword it's not being put here (it may be using intern method on newly created string)))
-          strings in string pool can be garbage collected
+        - contains string pool (containins strings objects put by compiler, 
+          if string is created by 'new' keyword it's not being put here (it may be using intern method on newly created string))).
+          Strings in string pool can be garbage collected.
+          It does work internally as hashmap.
+          Has default fixed size of buckets.
     - metaspace
         - store general metadata ( for example which classes where compiled by JIT to native code ) 
         - store information where static vars (objects) are stored (primitives are stored in metaspace itself) - static vars will never be garbage collected
@@ -52,3 +54,8 @@
         - -XX:CompileThreshold=n - number of times of `part of code/method` execution after which this `part of code/method` gets JIT compiled to native code
         - -XX:CICompilerCount=n - threads that may be used for JIT compilation. default 3
 
+        - -XX:+PrintStringTableStatistics - information about string pool (number of buckets, entries, literals etc.)
+        - -XX:StringTableSize=n(must be prime number) - size of string pool hash table (number of buckets)
+
+        - -XX:MaxHeapSize=n | -Xmx<n> - set maximum heap size
+        - -XX:InitialHeapSize=n - | -Xms<n> - set initial heap size
