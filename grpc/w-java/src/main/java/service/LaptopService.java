@@ -61,6 +61,7 @@ public class LaptopService extends com.example.pb.LaptopServiceGrpc.LaptopServic
     }
 
     @Override
+    // server streaming
     public void searchLaptop(SearchLaptopRequest request, StreamObserver<SearchLaptopResponse> responseObserver) throws InterruptedException {
         Filter filter = request.getFilter();
 
