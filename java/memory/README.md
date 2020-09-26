@@ -17,7 +17,7 @@
     - every native pointer takes 4 bytes              | 8 bytes
     - client JIT compiler (small short running app)   | client & server JIT compilers (long running apps) 
 
-#### Java memory
+#### Java memory structure
     - the stack
         - every thread has its own stack
         - stacks works as first in last out
@@ -47,7 +47,7 @@
 #### FLAGS
     - debugging
         - -XX:+PrintCompilation - prints to console jit code compilation stats ( after program exit 1)
-        - -XX:+UnlockDiagnosticVMOptions -XX:+LogCompilation - show jit code compilation stats at runtime (through log)
+        - -XX:+UnlockDiagnosticVMOptions -XX:+LogCompilation - show jit code compilation stats at runtime (through log file)
         - -XX:+PrintCodeCache - get information about available/used jvm cache size
         - -XX:+PrintFlagsFinal - get information final flags used
         
@@ -59,3 +59,10 @@
 
         - -XX:MaxHeapSize=n | -Xmx<n> - set maximum heap size
         - -XX:InitialHeapSize=n - | -Xms<n> - set initial heap size
+
+#### Garbage collector
+    - takes care of free up memory
+    - objects that are no longer accessible from stack or metaspace (are unreachable) are eligible for garbage collection
+    - some GC's during gc process are freeing up memory to system.
+    - process of garbage collecting is resource consuming process and may slow program for a while.
+    - when gc is removing object from the heap it;s calling finalize method on it (which is deprecated)
