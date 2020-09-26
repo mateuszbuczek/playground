@@ -13,13 +13,13 @@ public class LaptopServer {
     private final int port;
     private final Server server;
 
-    public LaptopServer(int port, LaptopStore store) {
-        this(ServerBuilder.forPort(port), port, store);
+    public LaptopServer(int port, LaptopStore store, ImageStore imageStore) {
+        this(ServerBuilder.forPort(port), port, store, imageStore);
     }
 
-    public LaptopServer(ServerBuilder serverBuilder, int port, LaptopStore laptopStore) {
+    public LaptopServer(ServerBuilder serverBuilder, int port, LaptopStore laptopStore, ImageStore imageStore) {
         this.port = port;
-        LaptopService laptopService = new LaptopService(laptopStore);
+        LaptopService laptopService = new LaptopService(laptopStore, imageStore);
         server = serverBuilder.addService(laptopService).build();
     }
 

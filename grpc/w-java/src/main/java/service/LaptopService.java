@@ -3,13 +3,19 @@ package service;
 import com.example.pb.CreateLaptopRequest;
 import com.example.pb.CreateLaptopResponse;
 import com.example.pb.Filter;
+import com.example.pb.ImageInfo;
 import com.example.pb.Laptop;
 import com.example.pb.SearchLaptopRequest;
 import com.example.pb.SearchLaptopResponse;
+import com.example.pb.UploadImageRequest;
+import com.example.pb.UploadImageResponse;
+import com.google.protobuf.ByteString;
 import io.grpc.Context;
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.UUID;
 import java.util.logging.Logger;
 
@@ -17,8 +23,10 @@ public class LaptopService extends com.example.pb.LaptopServiceGrpc.LaptopServic
     private static final Logger logger = Logger.getLogger(LaptopService.class.getName());
 
     private final LaptopStore laptopStore;
+    private ImageStore imageStore;
 
-    public LaptopService(LaptopStore laptopStore) {
+    public LaptopService(LaptopStore laptopStore, ImageStore imageStore) {
+        this.imageStore = imageStore;
         this.laptopStore = laptopStore;
     }
 
@@ -62,16 +70,82 @@ public class LaptopService extends com.example.pb.LaptopServiceGrpc.LaptopServic
 
     @Override
     // server streaming
-    public void searchLaptop(SearchLaptopRequest request, StreamObserver<SearchLaptopResponse> responseObserver) throws InterruptedException {
+    public void searchLaptop(SearchLaptopRequest request, StreamObserver<SearchLaptopResponse> responseObserver) {
         Filter filter = request.getFilter();
 
-        laptopStore.Search(Context.current(), filter, (laptop) -> {
-            logger.info("found laptop with ID: " + laptop.getId());
-            SearchLaptopResponse response = SearchLaptopResponse.newBuilder().setLaptop(laptop).build();
-            responseObserver.onNext(response);
-        });
+        try {
+            laptopStore.Search(Context.current(), filter, (laptop) -> {
+                logger.info("found laptop with ID: " + laptop.getId());
+                SearchLaptopResponse response = SearchLaptopResponse.newBuilder().setLaptop(laptop).build();
+                responseObserver.onNext(response);
+            });
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         responseObserver.onCompleted();
         logger.info("searching laptop completed");
+    }
+
+    @Override
+    public StreamObserver<UploadImageRequest> uploadImage(StreamObserver<UploadImageResponse> responseObserver) {
+        return new StreamObserver<UploadImageRequest>() {
+            private String laptopId;
+            private String imageType;
+            private ByteArrayOutputStream imageData;
+
+            @Override
+            public void onNext(UploadImageRequest request) {
+                if (request.getDataCase() == UploadImageRequest.DataCase.INFO) {
+                    ImageInfo info = request.getInfo();
+                    logger.info("receive image info: \n" + info);
+
+                    laptopId = info.getLaptopId();
+                    imageType = info.getImageType();
+                    imageData = new ByteArrayOutputStream();
+
+                    return;
+                }
+
+                ByteString chunkData = request.getChunkData();
+                logger.info("receive image chunk with size: " + chunkData.size());
+
+                if (imageData==null) {
+                    logger.info("image info wasnt sent before");
+                    responseObserver.onError(Status.INVALID_ARGUMENT.withDescription("image info wasnt sent before").asRuntimeException());
+                    return;
+                }
+
+                try {
+                    chunkData.writeTo(imageData);
+                } catch (IOException e) {
+                    responseObserver.onError(Status.INVALID_ARGUMENT.withDescription("error saving chunk data").asRuntimeException());
+                    return;
+                }
+            }
+
+            @Override
+            public void onError(Throwable t) {
+                logger.warning(t.getMessage());
+            }
+
+            @Override
+            public void onCompleted() {
+                String imageId = "";
+                int imageSize = imageData.size();
+                try {
+                    imageId = imageStore.save(laptopId, imageType, imageData);
+                } catch (IOException e) {
+                    responseObserver.onError(Status.INTERNAL.withDescription("error during saving image").asRuntimeException());
+                }
+
+                UploadImageResponse response = com.example.pb.UploadImageResponse.newBuilder()
+                        .setId(imageId)
+                        .setSize(imageSize)
+                        .build();
+                responseObserver.onNext(response);
+                responseObserver.onCompleted();
+            }
+        };
     }
 }
