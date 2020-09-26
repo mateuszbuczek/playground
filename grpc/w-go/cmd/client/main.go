@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"context"
 	"flag"
+	"fmt"
 	"github.com/mateuszbuczek/playground/grpc/w-go/pb"
 	"github.com/mateuszbuczek/playground/grpc/w-go/utils"
 	"google.golang.org/grpc"
@@ -25,7 +26,22 @@ func main() {
 	}
 
 	laptopServiceClient := pb.NewLaptopServiceClient(conn)
-	testUploadImage(laptopServiceClient)
+	testRateLaptop(laptopServiceClient)
+}
+
+func testRateLaptop(laptopClient pb.LaptopServiceClient) {
+	n := 3
+	laptopIDs := make([]string, n)
+	for i := 0; i < n; i++ {
+		laptop := utils.NewLaptop()
+		laptopIDs[i] = laptop.GetId()
+		createLaptop(laptopClient, laptop)
+	}
+
+	err := rateLaptop(laptopClient, laptopIDs)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
 
 func testUploadImage(laptopClient pb.LaptopServiceClient) {
@@ -145,4 +161,57 @@ func uploadImage(laptopClient pb.LaptopServiceClient, laptopId string, imagePath
 	}
 
 	log.Printf("image uploaded with od: %s, size: %d", res.GetId(), res.GetSize())
+}
+
+func rateLaptop(client pb.LaptopServiceClient, laptopsIds []string) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	stream, err := client.RateLaptop(ctx)
+	if err != nil {
+		return fmt.Errorf("cannot rate laptop: %v", err)
+	}
+
+	waitResponse := make(chan error)
+	// go routine to receive responses
+	go func() {
+		for {
+			res, err := stream.Recv()
+			if err == io.EOF {
+				log.Printf("no more responses")
+				waitResponse <- nil
+				return
+			}
+
+			if err != nil {
+				waitResponse <- fmt.Errorf("cannot receive stream response %v", err)
+				return
+			}
+
+			log.Print("received response ", res)
+		}
+	}()
+
+	for _, id := range laptopsIds {
+		request := &pb.RateLaptopRequest{
+			LaptopId: id,
+			Score:    float32(utils.RandomLaptopScore()),
+		}
+
+		err := stream.Send(request)
+
+		if err != nil {
+			return fmt.Errorf("cannot send stream reqiest: %v - %v", err, stream.RecvMsg(nil))
+		}
+
+		log.Print("sent request: ", request)
+	}
+
+	err = stream.CloseSend()
+	if err != nil {
+		return fmt.Errorf("cannot close send: %v", err)
+	}
+
+	err = <-waitResponse
+	return err
 }

@@ -14,15 +14,17 @@ import (
 type LaptopServer struct {
 	LaptopStore LaptopStore
 	imageStore  ImageStore
+	ratingStore RatingStore
 }
 
 //max 1 MB
 const maxImageSize = 1 << 20
 
-func NewLaptopServer(laptopStore LaptopStore, imageStore ImageStore) *LaptopServer {
+func NewLaptopServer(laptopStore LaptopStore, imageStore ImageStore, ratingStore RatingStore) *LaptopServer {
 	return &LaptopServer{
 		LaptopStore: laptopStore,
 		imageStore:  imageStore,
+		ratingStore: ratingStore,
 	}
 }
 
@@ -146,6 +148,53 @@ func (server *LaptopServer) UploadImage(stream pb.LaptopService_UploadImageServe
 	})
 	if err != nil {
 		return logError(status.Errorf(codes.Internal, "cannot close request"))
+	}
+
+	return nil
+}
+
+//bidirectional streaming
+func (server *LaptopServer) RateLaptop(stream pb.LaptopService_RateLaptopServer) error {
+	for {
+		if stream.Context().Err() != nil {
+			return logError(stream.Context().Err())
+		}
+
+		req, err := stream.Recv()
+		if err == io.EOF {
+			log.Print("no more data")
+			break
+		}
+
+		if err != nil {
+			return logError(status.Errorf(codes.Unknown, "cannot receive stream request: %v", err))
+		}
+
+		laptopId := req.GetLaptopId()
+		score := float64(req.GetScore())
+		log.Printf("received a rate laptop request: id %s, score %.2f", laptopId, score)
+		foundLaptop, err := server.LaptopStore.Find(laptopId)
+		if err != nil {
+			return logError(status.Errorf(codes.Internal, "cannot find laptop: %v", err))
+		}
+
+		if foundLaptop == nil {
+			{
+				return logError(status.Errorf(codes.NotFound, "laptopId %s is not found", laptopId))
+			}
+		}
+
+		rating, _ := server.ratingStore.Add(laptopId, score)
+		response := &pb.RateLaptopResponse{
+			LaptopId:     laptopId,
+			RatedCount:   rating.Count,
+			AverageScore: rating.Sum / float64(rating.Count),
+		}
+
+		err = stream.Send(response)
+		if err != nil {
+			return logError(status.Errorf(codes.NotFound, "cannot send stream response", laptopId))
+		}
 	}
 
 	return nil

@@ -66,3 +66,5 @@
     - some GC's during gc process are freeing up memory to system.
     - process of garbage collecting is resource consuming process and may slow program for a while.
     - when gc is removing object from the heap it;s calling finalize method on it (which is deprecated)
+    - soft leak - when an object remains referenced when no longer needed
+    - JavaVisualVM to check current jvm stats (current thread usage/ heap space used etc.) 

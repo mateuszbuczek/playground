@@ -11,7 +11,7 @@ import (
 )
 
 func main() {
-	port := flag.Int("port", 0, "the server port")
+	port := flag.Int("port", 8090, "the server port")
 	flag.Parse()
 	log.Printf("start server on port %d", *port)
 
@@ -19,7 +19,8 @@ func main() {
 
 	laptopStore := service.NewInMemoryLaptopStore()
 	diskImageStore := service.NewDiskImageStore("img")
-	laptopServer := service.NewLaptopServer(laptopStore, diskImageStore)
+	ratingStore := service.NewInMemoryRatingStore()
+	laptopServer := service.NewLaptopServer(laptopStore, diskImageStore, ratingStore)
 	pb.RegisterLaptopServiceServer(grpcServer, laptopServer)
 
 	address := fmt.Sprintf("0.0.0.0:%d", *port)
