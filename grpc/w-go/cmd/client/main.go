@@ -20,7 +20,11 @@ func main() {
 	flag.Parse()
 	log.Printf("dial server %s", *serverAddress)
 
-	conn, err := grpc.Dial(*serverAddress, grpc.WithInsecure())
+	conn, err := grpc.Dial(*serverAddress,
+		grpc.WithInsecure(),
+		//grpc.WithUnaryInterceptor(unaryinterceptor),
+		//grpc.WithStreamInterceptor(streaminterceptor),
+	)
 	if err != nil {
 		log.Fatal(err)
 	}

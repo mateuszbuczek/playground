@@ -45,3 +45,11 @@
 ###### compile proto file
     .proto files can be compiled using protobuf compiler (sudo apt install protobuf-compiler & sudo apt install libprotobuf-dev & sudo apt install libprotoc-dev)
     protoc --proto_path=proto proto/*.proto --go_out=plugins=grpc:pb
+
+###### evans client
+    - is a grpc client with cli
+    - debugging purpose
+    - can check current services, messages and call grpc api  
+
+##### grpc interceptor
+    - makes it easy to logging, tracing, rate limitting, authentication, authorization
