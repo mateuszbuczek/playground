@@ -53,3 +53,12 @@
 
 ##### grpc interceptor
     - makes it easy to logging, tracing, rate limitting, authentication, authorization
+
+##### grpc connections
+    - insecure - plain data
+    - server side tls - encrypted data - server needs to provide its certificate to client (server dont care about who is requesting resources)
+    - mutual tls - both server and client need to provide certificates to each other
+
+##### grpc gateway
+    - translates rest with json payload call to grpc
+    - is proxy
