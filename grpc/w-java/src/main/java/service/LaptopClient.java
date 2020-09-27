@@ -5,6 +5,8 @@ import com.example.pb.Filter;
 import com.example.pb.ImageInfo;
 import com.example.pb.Laptop;
 import com.example.pb.LaptopServiceGrpc;
+import com.example.pb.RateLaptopRequest;
+import com.example.pb.RateLaptopResponse;
 import com.example.pb.SearchLaptopRequest;
 import com.example.pb.SearchLaptopResponse;
 import com.example.pb.UploadImageRequest;
@@ -51,10 +53,17 @@ public class LaptopClient {
 //            laptopClient.searchLaptop(filter);
 
             // test upload image
-            laptopClient.createLaptop(laptop);
-            uploadImage(laptop.getId(), "tmp/test_image.jpg");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+//            laptopClient.createLaptop(laptop);
+//            uploadImage(laptop.getId(), "tmp/test_image.jpg");
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+
+            // test rate laptop
+                laptopClient.createLaptop(laptop);
+            Laptop laptop2 = Laptop.newBuilder().setId(UUID.randomUUID().toString()).build();
+                laptopClient.createLaptop(laptop2);
+                String[] ids = new String[]{laptop.getId(), laptop2.getId()};
+                rateLaptop(ids);
         } finally {
             laptopClient.shutdown();
         }
@@ -159,5 +168,48 @@ public class LaptopClient {
         logger.info(" search completed");
     }
 
+    public static void rateLaptop(String[] laptopIds) throws InterruptedException {
+        CountDownLatch finishLatch = new CountDownLatch(1);
+        StreamObserver<RateLaptopRequest> requestObserver = asyncStub.withDeadlineAfter(5, TimeUnit.SECONDS)
+                .rateLaptop(new StreamObserver<RateLaptopResponse>() {
+                    @Override
+                    public void onNext(RateLaptopResponse response) {
+                        logger.info(" laptop rated: id = " + response.getLaptopId());
+                    }
 
+                    @Override
+                    public void onError(Throwable t) {
+                        logger.log(Level.SEVERE, "Rate laptop failed: " + t.getMessage());
+                        finishLatch.countDown();
+                    }
+
+                    @Override
+                    public void onCompleted() {
+                        logger.info("completed");
+                        finishLatch.countDown();
+                    }
+                });
+
+        int n = laptopIds.length;
+        try {
+            for (int i = 0; i < n; i++) {
+                RateLaptopRequest request = RateLaptopRequest.newBuilder()
+                        .setLaptopId(laptopIds[i])
+                        .setScore(12.22F)
+                        .build();
+
+                requestObserver.onNext(request);
+                logger.info("sent rate laptop request: id = " + request.getLaptopId());
+            }
+        } catch (Exception ex) {
+            logger.log(Level.SEVERE, "unexpected error: "+ ex.getMessage());
+            requestObserver.onError(ex);
+            return;
+        }
+
+        requestObserver.onCompleted();
+        if (!finishLatch.await(1, TimeUnit.MINUTES)) {
+            logger.warning("request cannot finish within 1 minute");
+        }
+    }
 }
