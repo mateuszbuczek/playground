@@ -56,9 +56,12 @@
 
         - -XX:+PrintStringTableStatistics - information about string pool (number of buckets, entries, literals etc.)
         - -XX:StringTableSize=n(must be prime number) - size of string pool hash table (number of buckets)
-
+ 
         - -XX:MaxHeapSize=n | -Xmx<n> - set maximum heap size
         - -XX:InitialHeapSize=n - | -Xms<n> - set initial heap size
+        
+        - -XX:+HeapDumpOnOutOfMemoryError - dump heap on out of memory error
+        - -XX:HeadDumpPath=<filepath> - heap dump path
 
 #### Garbage collector
     - takes care of free up memory
@@ -68,3 +71,10 @@
     - when gc is removing object from the heap it;s calling finalize method on it (which is deprecated)
     - soft leak - when an object remains referenced when no longer needed
     - JavaVisualVM to check current jvm stats (current thread usage/ heap space used etc.) 
+    - uses mark & sweep to gc (mark objects accessible from stack and metadata and then remove every other)
+    - heap is divided to two generations yound & old (major). If object survives first gc it's moved to old generation.
+      Old generation objects are in most garbage collectors only checked when memory is almost full (when memory is needed).
+    - young generation is divided into 3 sections - eden, s0, s1.
+      If object survives garbage collection it's move further (eden -> s0/s1).
+      Survived objects are marked and moved to s0 or s1 ( easier to sweep ) configurable amount of times until it goes to old generation
+    
