@@ -62,6 +62,8 @@
         
         - -XX:+HeapDumpOnOutOfMemoryError - dump heap on out of memory error
         - -XX:HeadDumpPath=<filepath> - heap dump path
+        
+        - -verbose:gc - verbose logging of gc operations 
 
 #### Garbage collector
     - takes care of free up memory
