@@ -64,6 +64,7 @@
         - -XX:HeadDumpPath=<filepath> - heap dump path
         
         - -verbose:gc - verbose logging of gc operations 
+        - -XX:+UseAdaptiveSizePolicy - enabled by default, enable automatic size changing of different heap segments (old gen, eden, s0, s1)
 
 #### Garbage collector
     - takes care of free up memory
@@ -79,4 +80,3 @@
     - young generation is divided into 3 sections - eden, s0, s1.
       If object survives garbage collection it's move further (eden -> s0/s1).
       Survived objects are marked and moved to s0 or s1 ( easier to sweep ) configurable amount of times until it goes to old generation
-    
