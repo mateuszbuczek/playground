@@ -87,3 +87,12 @@
         - serial
         - parallel
         - mostly concurrent - small app pauses
+
+#### Java profiler
+    - connects to JVM and extracts data from it, many are licensed
+    - cpu, ram(eden, s0,s1, old, metadata), internet usage and more
+    - one of the free versions are JMC (java mission control)
+    - flight recording - record jvm stats throughout defined time (JMC can open it then)
+    
+#### Benchmarking
+    - JMH - takes care of warmup period (compilation to native code)
