@@ -16,3 +16,4 @@ GraalVM
  - alternative JVM
  - alternative Java compiler
  - native compiler (no JVM required) - graalVM can compile both to bytecode or native system code (executable which contains jvm inside)
+ - higher build time, lower ram usage, lower startuptime
