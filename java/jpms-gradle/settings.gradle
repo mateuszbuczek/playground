@@ -1,0 +1,2 @@
+rootProject.name = 'jpms-gradle'
+include 'module1', 'module2'
