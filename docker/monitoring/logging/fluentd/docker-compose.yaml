@@ -1,0 +1,47 @@
+version: "3"
+services: 
+    fluentd:
+       container_name: fluentd
+       user: root
+       build: 
+        context: ./Dockerfile
+       image: fluentd
+       volumes: 
+        # - /mnt/c/ProgramData/Docker/containers:/fluentd/log/containers # reading docker logs
+        - ./file:/fluentd/log/files/ # reading logs from a file
+        - ./configurations:/fluentd/etc/
+        - ./logs:/output/ # fluentd will collect logs and store it here
+       logging: 
+        driver: local
+    http-myapp: # send logs to fluentd through http
+        container_name: http-myapp
+        image: alpine
+        volumes: 
+        - ./http:/app
+        command: [/bin/sh, -c, "apk add --no-cache curl && chmod +x /app/app.sh && ./app/app.sh"]
+    file-myapp: # write logs to a file
+        container_name: file-myapp
+        image: alpine
+        volumes: 
+            - ./file:/app
+        command: [ /bin/sh, -c, "chmod +x /app/app.sh && ./app/app.sh"]
+    elasticsearch: #port 9200
+        image: elasticsearch:7.9.1
+        container_name: elasticsearch
+        environment: 
+            - node.name=elasticsearch
+            - cluster.initial_master_nodes=elasticsearch
+            - bootstrap.memory_lock=true
+            - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+        ulimits: 
+            memlock:
+                soft: -1
+                hard: -1
+    kibana:
+        image: kibana:7.9.1
+        container_name: kibana
+        ports:
+            - "5601:5601"
+        environment: 
+            ELASTICSEARCH_URL: http://elasticsearch:9200
+            ELASTICSEARCH_HOSTS: http://elasticsearch:9200

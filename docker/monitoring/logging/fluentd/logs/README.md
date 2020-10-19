@@ -1,0 +1,1 @@
+fluentd will collect all logs and write it here

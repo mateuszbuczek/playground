@@ -1,0 +1,45 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: user
+    password: password
+    driver-class-name: org.postgresql.Driver
+    initialization-mode: never
+  flyway:
+    enabled: true
+    schemas: demodb
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show_sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        use_sql_comments: true
+        default_schema: demodb
+    open-in-view: false
+  quartz:
+    job-store-type: memory
+  profiles:
+    active: quartzsched
+
+---
+spring:
+  profiles: quartzsched
+  quartz:
+    job-store-type: jdbc
+    jdbc:
+      initialize-schema: never
+    overwrite-existing-jobs: true
+    properties:
+      org:
+        quartz:
+          jobStore:
+            isClustered: true
+            tablePrefix: demodb.QRTZ_
+            driverDelegateClass: org.quartz.impl.jdbcjobstore.PostgreSQLDelegate
+          scheduler:
+            instanceId: AUTO
+
+server:
+  port: 0
