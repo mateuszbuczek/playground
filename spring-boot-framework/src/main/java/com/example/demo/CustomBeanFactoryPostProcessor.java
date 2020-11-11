@@ -10,6 +10,6 @@ public class CustomBeanFactoryPostProcessor implements BeanFactoryPostProcessor 
 
     @Override
     public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
-        System.out.println(">>>>>>>>>>>>> Bean Factory, create beans. Available ConfigurableListableBeanFactory");
+        System.out.println(">>>>>>>>>>>>>>> BeanFactoryPostProcessor, create beans. Available ConfigurableListableBeanFactory");
     }
 }
