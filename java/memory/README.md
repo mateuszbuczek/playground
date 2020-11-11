@@ -96,3 +96,10 @@
     
 #### Benchmarking
     - JMH - takes care of warmup period (compilation to native code)
+
+#### Garbage collectors
+    - CMS - Concurrent Mark Sweep -XX:+UseConcMarkSweepGC - concurrent with app threads
+    - G1 - -XX:+UseG1GC - split heap into regions , default from java 9
+    - Shenandoah - -XX:UseShenandoahGC -XX:+UnlockExperimentalVMOptions, huge heap, 
+    - Epsilon - -XX:+UseEpsilonGC -XX:+UnlockExperimentalVMOptions - no garbage collection
+    - ZGC - -XX:+UseZGC -XX:+UnlockExperimentalVMOptions - huge heap, low pause
