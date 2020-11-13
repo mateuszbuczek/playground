@@ -2,7 +2,6 @@ package com.example.demo;
 
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.support.GenericApplicationContext;
 
 public class CustomApplicationContextInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
 
