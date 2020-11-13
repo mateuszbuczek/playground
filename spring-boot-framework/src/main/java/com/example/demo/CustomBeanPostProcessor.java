@@ -15,7 +15,7 @@ public class CustomBeanPostProcessor implements BeanPostProcessor {
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
         if (postProcessBefore && beanName.contains("AutoConfiguration")) {
-            System.out.println(">>>>>>>>>>>>>>> BeanPostProcessor, process bean before initialization. Available bean and beanName");
+            System.out.println(">>>>>>>>>>>>>>> BeanPostProcessor -> process bean before initialization. Available bean and beanName");
             postProcessBefore = false;
         };
         return bean;
@@ -25,7 +25,7 @@ public class CustomBeanPostProcessor implements BeanPostProcessor {
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
 //        Here libraries use jdk proxy or cglib proxy to apply proxy
         if (postProcessAfter && beanName.contains("AutoConfiguration")) {
-            System.out.println(">>>>>>>>>>>>>>> BeanPostProcessor, process bean after initialization. Available bean and beanName");
+            System.out.println(">>>>>>>>>>>>>>> BeanPostProcessor -> process bean after initialization. Available bean and beanName");
             postProcessAfter = false;
         };
         return bean;

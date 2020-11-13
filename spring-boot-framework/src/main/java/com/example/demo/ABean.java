@@ -20,16 +20,16 @@ public class ABean implements InitializingBean {
 
     @PostConstruct
     public void afterConstruct() {
-        System.out.println(">>>>>>>>>>>>>>>>> Bean, post construct");
+        System.out.println(">>>>>>>>>>>>>>>>> Bean -> post construct");
     }
 
     @PreDestroy
     public void preDestroy() {
-        System.out.println(">>>>>>>>>>>>>>>>> Bean, pre destroy");
+        System.out.println(">>>>>>>>>>>>>>>>> Bean -> pre destroy");
     }
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        System.out.println(">>>>>>>>>>>>>>>>> Bean, after properties set");
+        System.out.println(">>>>>>>>>>>>>>>>> Bean -> after properties set");
     }
 }

@@ -8,6 +8,6 @@ public class CustomEnvironmentPostProcessor implements EnvironmentPostProcessor 
 
     @Override
     public void postProcessEnvironment(ConfigurableEnvironment environment, SpringApplication application) {
-        System.out.println(">>>>>>>>>>>>>>> EnvironmentPostProcessor, post process environment - available ConfigurableEnvironment and SpringApplication");
+        System.out.println(">>>>>>>>>>>>>>> EnvironmentPostProcessor -> post process environment - available ConfigurableEnvironment and SpringApplication");
     }
 }
