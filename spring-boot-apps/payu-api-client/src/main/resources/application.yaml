@@ -15,11 +15,11 @@ spring:
     password: ${db.password}
 
 integration:
-  payu:
-    url: ${integration.payu.url}
-    client_id: ${integration.payu.client_id}
-    client_secret: ${integration.payu.client_secret}
-    shop_id: ${integration.payu.shop_id}
+  payment-gateway:
+    url: ${integration.payment-gateway.url}
+    client-id: ${integration.payment-gateway.client-id}
+    client-secret: ${integration.payment-gateway.client-secret}
+    shop-id: ${integration.payment-gateway.shop-id}
 
 management:
   endpoints:
