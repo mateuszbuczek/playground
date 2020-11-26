@@ -1,0 +1,43 @@
+spring:
+  profiles:
+    active: 'creds, local-db'
+  r2dbc:
+    url: r2dbc:pool:postgresql://${db.host}:${db.port}/${db.database}?currentSchema=${db.schema}
+    username: ${db.username}
+    password: ${db.password}
+    pool:
+      enabled: true
+      max-size: 10
+  # need to connect through jdbc
+  flyway:
+    url: jdbc:postgresql://${db.host}:${db.port}/${db.database}?currentSchema=${db.schema}
+    user: ${db.username}
+    password: ${db.password}
+
+integration:
+  payu:
+    url: ${integration.payu.url}
+    client_id: ${integration.payu.client_id}
+    client_secret: ${integration.payu.client_secret}
+    shop_id: ${integration.payu.shop_id}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: always
+---
+spring:
+  config:
+    activate:
+      on-profile: local-db
+db:
+  host: localhost
+  port: 5432
+  database: postgres
+  schema: test_schema
+  username: user
+  password: password
