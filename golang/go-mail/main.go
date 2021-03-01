@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/mateuszbuczek/playground/golang/go-mail/email"
 	"log"
+	"mail/email"
 	"net/mail"
 	"net/smtp"
 )
@@ -24,7 +24,7 @@ func main() {
 	m.AddHeader("X-CUSTOMER-id", "xxxxx")
 
 	// send it
-	auth := smtp.PlainAuth("", "from@example.com", "pwd", "smtp.zoho.com")
+	auth := smtp.PlainAuth("asd", "from@example.com", "pwd", "smtp.zoho.com")
 	if err := email.Send("smtp.zoho.com:587", auth, m); err != nil {
 		log.Fatal(err)
 	}
