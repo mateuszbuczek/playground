@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login page</title>
+</head>
+<body>
+<h1>Login page</h1>
+<form th:action="@{/oauth/signin}" method="post">
+    <label for="username">Username</label>:
+    <input type="text" id="username" name="username" value="test-username" autofocus="autofocus"/> <br/>
+
+    <label for="password">Password</label>:
+    <input type="password" id="password" name="password" value="test-password"/> <br/><br/>
+
+    <label for="client_id">client_id</label>:
+    <input type="text" id="client_id" th:value="${client_id}" name="clientId"/> <br/>
+
+    <label for="scope">scope</label>:
+    <input type="text" id="scope" th:value="${scope}" name="scope"/> <br/>
+
+    <label for="response_type">response_type</label>:
+    <input type="text" id="response_type" th:value="${response_type}" name="responseType"/> <br/>
+
+    <label for="redirect_uri">redirect_uri</label>:
+    <input type="text" id="redirect_uri" th:value="${redirect_uri}" name="redirectUri"/> <br/><br/>
+
+    <input type="submit" id="submit_button" value="Log in"/>
+</form>
+</body>
+</html>

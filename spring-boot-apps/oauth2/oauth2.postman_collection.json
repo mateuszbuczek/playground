@@ -1,0 +1,225 @@
+{
+	"info": {
+		"_postman_id": "d9483485-53f2-41ef-87a4-54cd04ac7e99",
+		"name": "oauth2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "oauth/authorize",
+			"protocolProfileBehavior": {
+				"followRedirects": false
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/oauth/authorize?response_type=CODE&scope=email&client_id=1&redirect_uri=http://localhost:8080/callback",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"oauth",
+						"authorize"
+					],
+					"query": [
+						{
+							"key": "response_type",
+							"value": "CODE"
+						},
+						{
+							"key": "scope",
+							"value": "email"
+						},
+						{
+							"key": "client_id",
+							"value": "1"
+						},
+						{
+							"key": "redirect_uri",
+							"value": "http://localhost:8080/callback"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "oauth/token",
+			"protocolProfileBehavior": {
+				"followRedirects": false
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:8090/oauth/token?client_id=4531734940701761918&client_secret=5b1d9c3d-12e6-44f3-86a6-9f7e85e80dff&grant_type=AUTHORIZATION_CODE&redirect_uri=http://localhost:8080/callback&code=89131f50-111e-4da4-b3b3-7b41262af48a",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"oauth",
+						"token"
+					],
+					"query": [
+						{
+							"key": "client_id",
+							"value": "4531734940701761918"
+						},
+						{
+							"key": "client_secret",
+							"value": "5b1d9c3d-12e6-44f3-86a6-9f7e85e80dff"
+						},
+						{
+							"key": "grant_type",
+							"value": "AUTHORIZATION_CODE"
+						},
+						{
+							"key": "redirect_uri",
+							"value": "http://localhost:8080/callback"
+						},
+						{
+							"key": "code",
+							"value": "89131f50-111e-4da4-b3b3-7b41262af48a"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "oauth/token_info",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:8090/oauth/token_info?access_token=eyJuYW1lIjoidGVzdC1uYW1lIiwidXNlcm5hbWUiOiJ0ZXN0LXVzZXJuYW1lIn0=",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"oauth",
+						"token_info"
+					],
+					"query": [
+						{
+							"key": "access_token",
+							"value": "eyJuYW1lIjoidGVzdC1uYW1lIiwidXNlcm5hbWUiOiJ0ZXN0LXVzZXJuYW1lIn0="
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "users",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"test-name\",\r\n    \"username\": \"test-username\",\r\n    \"password\": \"test-password\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8090/users",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "clients",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:8090/clients",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"clients"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "oauth/signin",
+			"protocolProfileBehavior": {
+				"followRedirects": false
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"responseType\": \"CODE\",\r\n    \"scope\": [\"user_details\"],\r\n    \"clientId\": 4531734940701761918,\r\n    \"redirectUri\": \"http://localhost:8080/callback\",\r\n    \"username\": \"test-username\",\r\n    \"password\": \"test-password\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8090/oauth/signin",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"oauth",
+						"signin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "oauth/signin token",
+			"protocolProfileBehavior": {
+				"followRedirects": false
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"responseType\": \"TOKEN\",\r\n    \"scope\": [\"user_details\"],\r\n    \"clientId\": 4531734940701761918,\r\n    \"clientSecret\": \"5b1d9c3d-12e6-44f3-86a6-9f7e85e80dff\",\r\n    \"redirectUri\": \"http://localhost:8080/callback\",\r\n    \"username\": \"test-username\",\r\n    \"password\": \"test-password\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8090/oauth/signin",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"oauth",
+						"signin"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
