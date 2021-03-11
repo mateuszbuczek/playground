@@ -1,0 +1,9 @@
+server:
+  port: 8080
+
+app:
+  oauth:
+    client_id: 7197338702114162323
+    client_secret: 3ab4161f-822c-4b39-8b33-b8e47c363ae1
+    auth_server_url: http://localhost:8090
+    redirect_url: http://localhost:8080/oauth
