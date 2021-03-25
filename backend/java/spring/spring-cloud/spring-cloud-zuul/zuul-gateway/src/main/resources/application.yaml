@@ -1,0 +1,11 @@
+server:
+  port: 8080
+
+zuul:
+  prefix: /api
+  routes:
+    api-server:
+      path: /services/1/**
+      url: http://localhost:8090
+  force-original-query-string-encoding: true
+  strip-prefix: true
