@@ -1,4 +1,4 @@
-package com.example.resourceserver;
+package com.example.clientserver;
 
 import lombok.Getter;
 import lombok.Setter;
