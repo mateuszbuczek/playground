@@ -1,0 +1,22 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          facebook:
+            client-id: PLACEHOLDER
+            client-secret: PLACEHOLDER
+            scope: public_profile,email
+
+#        FOR NON COMMON PROVIDERS WHO HAS SPEC
+#          google:
+#            client-id: PLACEHOLDER
+#            client-secret: PLACEHOLDER
+#            provider: google
+#        provider:
+#          google:
+#            issuer-uri: https://accounts.google.com
+logging:
+  level:
+    org.springframework.web.client: debug
+    org.springframework.security: debug
