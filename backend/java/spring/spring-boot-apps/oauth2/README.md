@@ -58,3 +58,6 @@ Delegated authorization
 - oauth/token
 - oauth/token_info
 - oauth/revoke
+
+#### OAUTH2 spec for commons impls
+- https://accounts.google.com/.well-known/openid-configuration
