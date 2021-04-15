@@ -58,18 +58,18 @@ func (m *Message) attach(file string, inline bool) error {
 	return nil
 }
 
-func (m *Message) AddTo(address mail.Address) []string {
-	m.To = append(m.To, address.String())
+func (m *Message) AddTo(address string) []string {
+	m.To = append(m.To, address)
 	return m.To
 }
 
-func (m *Message) AddCc(address mail.Address) []string {
-	m.Cc = append(m.Cc, address.String())
+func (m *Message) AddCc(address string) []string {
+	m.Cc = append(m.Cc, address)
 	return m.Cc
 }
 
-func (m *Message) AddBcc(address mail.Address) []string {
-	m.Bcc = append(m.Bcc, address.String())
+func (m *Message) AddBcc(address string) []string {
+	m.Bcc = append(m.Bcc, address)
 	return m.Bcc
 }
 
