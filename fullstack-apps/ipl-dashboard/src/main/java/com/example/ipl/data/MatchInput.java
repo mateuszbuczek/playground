@@ -1,4 +1,4 @@
-package com.example.ipl;
+package com.example.ipl.data;
 
 import lombok.Value;
 

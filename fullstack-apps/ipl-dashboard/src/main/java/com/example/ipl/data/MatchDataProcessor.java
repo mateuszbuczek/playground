@@ -1,5 +1,6 @@
-package com.example.ipl;
+package com.example.ipl.data;
 
+import com.example.ipl.Match;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.item.ItemProcessor;
 
@@ -9,7 +10,7 @@ import java.time.LocalDate;
 class MatchDataProcessor implements ItemProcessor<MatchInput, Match> {
 
     @Override
-    public Match process(final MatchInput item) throws Exception {
+    public Match process(final MatchInput item) {
         Match match = new Match();
         match.setId(Long.valueOf(item.getId()));
         match.setCity(item.getCity());

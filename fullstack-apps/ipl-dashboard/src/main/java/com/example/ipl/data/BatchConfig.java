@@ -1,5 +1,6 @@
-package com.example.ipl;
+package com.example.ipl.data;
 
+import com.example.ipl.Match;
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
