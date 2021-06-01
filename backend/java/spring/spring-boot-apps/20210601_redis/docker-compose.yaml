@@ -1,0 +1,72 @@
+version: '3'
+services:
+  postgres-db:
+    image: launcher.gcr.io/google/postgresql11
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: demo
+      POSTGRES_PASSWORD: demo
+    ports:
+      - 5432:5432
+  # master write only and replicas read only
+  redis-0:
+    image: redis:6.0-alpine
+    volumes:
+    - ${PWD}/redis/redis-0:/etc/redis
+    command: redis-server /etc/redis/redis.conf
+    ports:
+      - 6379:6379
+
+  redis-1:
+    image: redis:6.0-alpine
+    volumes:
+      - ${PWD}/redis/redis-1:/etc/redis
+    command: redis-server /etc/redis/redis.conf
+    ports:
+      - 6380:6379
+
+  redis-2:
+    image: redis:6.0-alpine
+    volumes:
+      - ${PWD}/redis/redis-2:/etc/redis
+    command: redis-server /etc/redis/redis.conf
+    ports:
+      - 6381:6379
+
+  sentinel-0:
+    image: redis:6.0-alpine
+    volumes:
+      - ${PWD}/redis/sentinel-0:/etc/redis/
+    command: redis-sentinel /etc/redis/sentinel.conf
+    ports:
+    - 26379:5000
+
+  sentinel-1:
+    image: redis:6.0-alpine
+    volumes:
+      - ${PWD}/redis/sentinel-1:/etc/redis/
+    command: redis-sentinel /etc/redis/sentinel.conf
+    ports:
+      - 26380:5000
+
+  sentinel-2:
+    image: redis:6.0-alpine
+    volumes:
+      - ${PWD}/redis/sentinel-2:/etc/redis/
+    command: redis-sentinel /etc/redis/sentinel.conf
+    ports:
+      - 26381:5000
+
+  redis-commander:
+    container_name: redis-commander
+    hostname: redis-commander
+    image: rediscommander/redis-commander:latest
+    environment:
+      - PORT=8090
+      - SENTINELS=sentinel-0:5000:mymaster,sentinel-1:5000,sentinel-2:5000
+    ports:
+      - "8090:8090"
+    depends_on:
+      - sentinel-0
+      - sentinel-1
+      - sentinel-2
