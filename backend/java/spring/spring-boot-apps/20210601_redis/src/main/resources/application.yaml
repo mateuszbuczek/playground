@@ -5,6 +5,8 @@ spring:
     password: demo
     driver-class-name: org.postgresql.Driver
   redis:
+    port: 26379
+    password: demo
     sentinel:
       master: mymaster
       nodes:

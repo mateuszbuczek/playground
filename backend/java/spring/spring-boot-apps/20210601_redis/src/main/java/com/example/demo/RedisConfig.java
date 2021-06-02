@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.data.redis.LettuceClientConfigurat
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.connection.RedisPassword;
 import org.springframework.data.redis.connection.RedisSentinelConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceClientConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
@@ -36,7 +37,11 @@ public class RedisConfig {
     protected LettuceConnectionFactory redisConnectionFactory() {
         RedisSentinelConfiguration config = new RedisSentinelConfiguration().master(properties.getSentinel().getMaster());
         properties.getSentinel().getNodes()
-                .forEach(node -> config.sentinel("//TODO", 0));
+                .forEach(node -> {
+                    String[] hostPort = node.split(":");
+                    config.sentinel(hostPort[0], Integer.valueOf(hostPort[1]));
+                });
+        config.setPassword(RedisPassword.of(properties.getPassword()));
         return new LettuceConnectionFactory(config, LettuceClientConfiguration.defaultConfiguration());
     }
 
