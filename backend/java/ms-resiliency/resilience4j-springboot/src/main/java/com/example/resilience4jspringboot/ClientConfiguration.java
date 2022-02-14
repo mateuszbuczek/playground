@@ -14,21 +14,13 @@ public class ClientConfiguration {
 
     @Bean
     RestTemplate restTemplate() {
-        return new RestTemplateBuilder().build();
+        return new RestTemplateBuilder().setConnectTimeout(Duration.ofSeconds(1)).build();
     }
 
-    @Component
-    static class RetryConfig implements RetryConfigCustomizer {
-
-        @Override
-        public void customize(io.github.resilience4j.retry.RetryConfig.Builder configBuilder) {
-            configBuilder.maxAttempts(3);
-            configBuilder.waitDuration(Duration.ofSeconds(1));
-        }
-
-        @Override
-        public String name() {
-            return "testRetryer";
-        }
+    @Bean
+    RetryConfigCustomizer retryConfigCustomizer() {
+        return RetryConfigCustomizer.of("testretryer", configbuilder -> {
+            configbuilder.maxAttempts(4).waitDuration(Duration.ofSeconds(1)).build();
+        });
     }
 }

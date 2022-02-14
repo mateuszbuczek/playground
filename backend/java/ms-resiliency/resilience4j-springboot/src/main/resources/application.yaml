@@ -1,0 +1,31 @@
+resilience4j:
+  retry:
+    instances:
+      testretryer:
+        maxRetryAttempts: 5
+        waitDuration: 1s
+  circuitbreaker:
+    instances:
+      testcb:
+        registerHealthIndicator: true
+        eventConsumerBufferSize: 10
+        failureRate: 50
+        minimumNumberOfCalls: 5
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        waitDurationInOpenState: 5s
+        permittedNumberOfCallsInHalfOpenState: 3
+        slidingWindowSize: 10
+        slidingWindowType: COUNT_BASED
+
+
+management:
+  health:
+    circuitbreakers:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: always
