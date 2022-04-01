@@ -1,0 +1,13 @@
+spring:
+  kafka:
+    bootstrap-servers: localhost:29092
+    streams:
+      state-dir: /c/workspace/tmp/email-svc-state-store-6
+
+topics:
+  orders:
+    name: orders
+  payments:
+    name: payments
+  customers:
+    name: customers

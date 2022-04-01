@@ -1,0 +1,12 @@
+server:
+  port: 8080
+
+spring:
+  kafka:
+    bootstrap-servers: localhost:29092
+    streams:
+      state-dir: /mnt/c/workspace/tmp/orders-svc-state-store-4
+
+topics:
+  orders:
+    name: orders
